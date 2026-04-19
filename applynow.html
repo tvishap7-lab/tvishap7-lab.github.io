@@ -1,124 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apply Now - HireSphere</title>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-
-body{
-  background:#f5f7fb;
-}
-
-.container{
-  max-width:400px;
-  margin:80px auto;
-  background:white;
-  padding:25px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-
-h2{
-  text-align:center;
-  margin-bottom:20px;
-}
-
-input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border:1px solid #ccc;
-  border-radius:5px;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  background:#2563eb;
-  color:white;
-  border:none;
-  border-radius:5px;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#1d4ed8;
-}
-
-#jobDetails{
-  margin-bottom:15px;
-  background:#f1f5f9;
-  padding:10px;
-  border-radius:5px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Now - HireSphere</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f5f7fb; }
+        .container { max-width: 400px; margin: 80px auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #1d4ed8; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        #jobDetails { margin-bottom: 15px; background: #f1f5f9; padding: 15px; border-radius: 5px; line-height: 1.5; }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
+    <h2>Apply for Job</h2>
+    
+    <div id="jobDetails"></div>
 
-<h2>Apply for Job</h2>
-
-<!-- Job Details -->
-<div id="jobDetails"></div>
-
-<!-- Form -->
-<input type="text" id="name" placeholder="Your Name">
-<input type="email" id="email" placeholder="Your Email">
-
-<!-- IMPORTANT: type=\"button\" -->
-<button type="button" onclick="applyNow()">Submit Application</button>
-
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    
+    <button type="button" id="submitBtn" onclick="applyNow()">Submit Application</button>
 </div>
 
 <script>
-// LOAD JOB DATA
-const title = localStorage.getItem("jobTitle");
-const company = localStorage.getItem("jobCompany");
-const location = localStorage.getItem("jobLocation");
+    // 1. Fetch Job Data from LocalStorage (set by jobs.html)
+    const title = localStorage.getItem("jobTitle");
+    const company = localStorage.getItem("jobCompany");
+    const locationInfo = localStorage.getItem("jobLocation");
 
-// SHOW JOB DETAILS
-document.getElementById("jobDetails").innerHTML =
-  "<b>" + (title || "No Job Selected") + "</b><br>" +
-  (company || "") + "<br>" +
-  (location || "");
-
-function applyNow(){
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-
-    if(name === "" || email === ""){
-        alert("Please fill all fields");
-        return;
+    // 2. Display the data immediately
+    const detailsDiv = document.getElementById("jobDetails");
+    if (title) {
+        detailsDiv.innerHTML = `<strong>${title}</strong><br>${company}<br>${locationInfo}`;
+    } else {
+        detailsDiv.innerHTML = `<span style="color:red;">No job selected. Please go back to the jobs page.</span>`;
+        document.getElementById("submitBtn").disabled = true;
     }
 
-    let applications = JSON.parse(localStorage.getItem("applications")) || [];
+    function applyNow() {
+        const nameField = document.getElementById("name");
+        const emailField = document.getElementById("email");
+        const submitBtn = document.getElementById("submitBtn");
 
-    const job = {
-        name: name,
-        email: email,
-        title: localStorage.getItem("jobTitle"),
-        company: localStorage.getItem("jobCompany"),
-        location: localStorage.getItem("jobLocation")
-    };
+        const name = nameField.value.trim();
+        const email = emailField.value.trim();
 
-    applications.push(job);
+        // Basic Validation
+        if (name === "" || email === "") {
+            alert("Please fill in all fields.");
+            return;
+        }
 
-    localStorage.setItem("applications", JSON.stringify(applications));
+        // Disable button to prevent double submission
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Submitting...";
 
-    alert("Application Submitted Successfully!");
+        try {
+            // Get existing applications or start a new array
+            let applications = JSON.parse(localStorage.getItem("applications")) || [];
 
-    // 🔥 FORCE redirect after slight delay (fixes browser issues)
-    setTimeout(() => {
-        window.location.assign("./applications.html");
-    }, 500);
-}
+            // Create new application object
+            const newApp = {
+                name: name,
+                email: email,
+                title: title,
+                company: company,
+                location: locationInfo,
+                date: new Date().toLocaleDateString() // Bonus: Add a date!
+            };
 
+            // Save back to localStorage
+            applications.push(newApp);
+            localStorage.setItem("applications", JSON.stringify(applications));
+
+            alert("Application Submitted Successfully!");
+
+            // Redirect to the applications list
+            window.location.href = "applications.html";
+
+        } catch (error) {
+            console.error("Error saving application:", error);
+            alert("Failed to save application. Please try again.");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit Application";
+        }
+    }
 </script>
 
 </body>
