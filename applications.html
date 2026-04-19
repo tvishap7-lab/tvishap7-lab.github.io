@@ -1,30 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>My Applications</title>
-<style>
-body{font-family:Arial;background:#f5f7fb;padding:20px;}
-.card{background:white;padding:15px;margin:10px;border-radius:8px;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications - HireSphere</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f7fb; padding: 20px; color: #333; }
+        .header-box { max-width: 800px; margin: 0 auto 20px auto; display: flex; justify-content: space-between; align-items: center; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: white; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-left: 5px solid #2563eb; }
+        .card h3 { margin-bottom: 5px; color: #2563eb; }
+        .card p { margin: 5px 0; color: #555; }
+        .no-data { text-align: center; margin-top: 50px; color: #777; }
+        .btn-back { padding: 10px 15px; background: #2563eb; color: white; text-decoration: none; border-radius: 5px; font-size: 14px; }
+    </style>
 </head>
 <body>
 
-<h2>My Applications</h2>
-<div id="list"></div>
+<div class="header-box">
+    <h2>My Applications</h2>
+    <a href="jobs.html" class="btn-back">Browse More Jobs</a>
+</div>
+
+<div id="list" class="container">
+    </div>
 
 <script>
-let applications = JSON.parse(localStorage.getItem("applications")) || [];
+    const container = document.getElementById("list");
+    const applications = JSON.parse(localStorage.getItem("applications")) || [];
 
-let container = document.getElementById("list");
-
-applications.forEach(job => {
-    let div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = "<h3>" + job.title + "</h3>" +
-                    "<p>" + job.company + "</p>" +
-                    "<p>" + job.location + "</p>";
-    container.appendChild(div);
-});
+    if (applications.length === 0) {
+        container.innerHTML = `<div class="no-data">
+                                    <p>You haven't applied for any jobs yet.</p>
+                               </div>`;
+    } else {
+        // Loop through applications (Reverse so newest is on top)
+        applications.reverse().forEach(job => {
+            let div = document.createElement("div");
+            div.className = "card";
+            div.innerHTML = `
+                <h3>${job.title || "Position Unknown"}</h3>
+                <p><strong>Company:</strong> ${job.company || "N/A"}</p>
+                <p><strong>Location:</strong> ${job.location || "N/A"}</p>
+                <p><small>Applied on: ${job.date || "Unknown"}</small></p>
+            `;
+            container.appendChild(div);
+        });
+    }
 </script>
 
 </body>
