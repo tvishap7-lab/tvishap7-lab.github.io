@@ -4,17 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply Now - HireSphere</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f5f7fb; }
-        .container { max-width: 400px; margin: 80px auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h2 { text-align: center; margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        button:hover { background: #1d4ed8; }
-        button:disabled { background: #ccc; cursor: not-allowed; }
-        #jobDetails { margin-bottom: 15px; background: #f1f5f9; padding: 15px; border-radius: 5px; line-height: 1.5; }
-    </style>
+   <style>
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --bg: #f5f7fb;
+        --text: #1f2937;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    
+    body { background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+
+    .container { 
+        max-width: 450px; 
+        width: 90%; 
+        background: white; 
+        padding: 30px; 
+        border-radius: 12px; 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+    }
+
+    h2 { text-align: center; margin-bottom: 25px; color: var(--primary); font-size: 24px; }
+
+    #jobDetails { 
+        margin-bottom: 20px; 
+        background: #eff6ff; 
+        padding: 15px; 
+        border-radius: 8px; 
+        border-left: 4px solid var(--primary);
+        font-size: 0.95rem;
+    }
+
+    #jobDetails strong { color: var(--primary); font-size: 1.1rem; }
+
+    input { 
+        width: 100%; 
+        padding: 12px 15px; 
+        margin: 8px 0 15px 0; 
+        border: 1.5px solid #e5e7eb; 
+        border-radius: 8px; 
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    input:focus { border-color: var(--primary); }
+
+    button { 
+        width: 100%; 
+        padding: 14px; 
+        background: var(--primary); 
+        color: white; 
+        border: none; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        font-weight: 600; 
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    button:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    
+    button:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
+</style>
 </head>
 <body>
 
