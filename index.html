@@ -164,7 +164,7 @@ body.dark .card{
 
   <div style="display:flex;align-items:center;">
     <button id="darkToggle" class="theme-btn" onclick="toggleDark()">🌙</button>
-    <li><a href="register.html">Sign up</a></li>
+    <li id="signupLink"><a href="register.html">Sign up</a></li>
     <div id="username" style="font-weight:bold; color:#2563eb;"></div>
   </div>
 </nav>
@@ -193,9 +193,15 @@ body.dark .card{
 
 // USER NAME
 let name = localStorage.getItem("username");
+
 if(name){
+  // show welcome text
   document.getElementById("username").innerText = "Welcome, " + name;
+
+  // hide signup button
+  document.getElementById("signupLink").style.display = "none";
 }
+
 
 // DARK MODE
 function toggleDark(){
