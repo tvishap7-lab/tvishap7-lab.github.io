@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - HireSphere</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#f5f7fb;display:flex;justify-content:center;align-items:center;height:100vh;}
+.login-box{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.2);
+width:350px;
+text-align:center;
+}
+.login-box h2{margin-bottom:20px;color:#2563eb;}
+.login-box input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:5px;
+}
+.login-box button{
+width:100%;
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:16px;
+}
+.login-box button:hover{background:#1d4ed8;}
+.login-box p{margin-top:15px;font-size:14px;}
+.login-box a{color:#2563eb;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="login-box">
+<h2>Login to HireSphere</h2>
+<form>
+<input type="email" placeholder="Enter Email" required>
+<input type="password" placeholder="Enter Password" required>
+<button type="submit">Login</button>
+</form>
+<p>Don't have an account? <a href="register.html">Register</a></p>
+</div>
+<script>
+document.querySelector("form").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  let email = document.querySelector('input[type="email"]').value;
+  let password = document.querySelector('input[type="password"]').value;
+
+  let storedEmail = localStorage.getItem("email");
+  let storedPassword = localStorage.getItem("password");
+
+  if(email === storedEmail && password === storedPassword){
+    window.location.href = "index.html";
+  }else{
+    alert("Invalid email or password ❌");
+  }
+});
+</script>
+
+</body>
+</html>

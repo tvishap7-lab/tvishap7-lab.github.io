@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HireSphere - Smart Job Portal</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+
+body{
+  background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 50%, #ffffff 100%);
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(37,99,235,0.10), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(124,58,237,0.08), transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(56,189,248,0.08), transparent 45%);
+  color:#1f2937;
+  min-height:100vh;
+}
+
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 60px;
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(12px);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+nav ul{
+  display:flex;
+  gap:25px;
+  list-style:none;
+}
+
+nav a{
+  text-decoration:none;
+  color:#2563eb;
+  font-weight:500;
+}
+
+nav a:hover{
+  color:#7c3aed;
+}
+
+.theme-btn{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+  background:#111827;
+  color:white;
+  margin-right:10px;
+}
+
+.hero{
+  padding:100px 50px;
+  text-align:center;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  color:white;
+}
+
+.hero h1{font-size:48px;margin-bottom:20px;}
+.hero p{font-size:20px;margin-bottom:30px;}
+
+.search-bar input,.search-bar button{
+  padding:15px;
+  margin:5px;
+  border:none;
+  border-radius:8px;
+}
+
+.search-bar button{
+  background:#111827;
+  color:white;
+  cursor:pointer;
+}
+
+.section{
+  padding:60px 50px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+}
+
+.card{
+  background:#ffffff;
+  padding:22px;
+  border-radius:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.job-title{font-size:20px;font-weight:bold;}
+.company{color:#6b7280;margin:5px 0;}
+.location{color:#2563eb;}
+
+.apply-btn{
+  margin-top:10px;
+  padding:8px 15px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.apply-btn:hover{
+  background:#1d4ed8;
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  background:#111827;
+  color:white;
+  margin-top:40px;
+}
+
+/* DARK MODE */
+body.dark{
+  background:#0b1220;
+  color:#e5e7eb;
+}
+
+body.dark nav{
+  background:rgba(17,24,39,0.7);
+}
+
+body.dark nav a{
+  color:#93c5fd;
+}
+
+body.dark .card{
+  background:#111827;
+  color:#e5e7eb;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+  <h2>HireSphere</h2>
+
+  <ul>
+    <li><a href="jobs.html">Jobs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="profile.html">My Profile</a></li>
+    <li><a href="applications.html">My Applications</a></li>
+  </ul>
+
+  <div style="display:flex;align-items:center;">
+    <button id="darkToggle" class="theme-btn" onclick="toggleDark()">🌙</button>
+    <div id="username" style="font-weight:bold; color:#2563eb;"></div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Find Your Dream Job Smarter</h1>
+  <p>AI-powered platform to connect talent with opportunities</p>
+
+  <div class="search-bar">
+    <input type="text" id="jobTitle" placeholder="Job Title">
+    <input type="text" id="location" placeholder="Location">
+    <button onclick="searchJobs()">Search Jobs</button>
+  </div>
+</section>
+
+<div id="results" class="section">
+  <h2>Search Results</h2>
+  <div id="jobResults" class="cards"></div>
+</div>
+
+<footer>
+  <p>© 2026 HireSphere. All rights reserved.</p>
+</footer>
+
+<script>
+
+// USER NAME
+let name = localStorage.getItem("username");
+if(name){
+  document.getElementById("username").innerText = "Welcome, " + name;
+}
+
+// DARK MODE
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+// JOB DATA
+const jobs = [
+  {title:"Frontend Developer",location:"Bangalore",company:"Google"},
+  {title:"Marketing Executive",location:"Mumbai",company:"Amazon"},
+  {title:"Financial Analyst",location:"Mumbai",company:"Deloitte"}
+];
+
+// SEARCH
+function searchJobs(){
+  let job=document.getElementById("jobTitle").value.toLowerCase();
+  let location=document.getElementById("location").value.toLowerCase();
+  let results=document.getElementById("jobResults");
+  results.innerHTML="";
+
+  let filtered=jobs.filter(j =>
+    (job===""||j.title.toLowerCase().includes(job)) &&
+    (location===""||j.location.toLowerCase().includes(location))
+  );
+
+  if(filtered.length === 0){
+    results.innerHTML = "<p>No jobs found</p>";
+    return;
+  }
+
+  filtered.forEach(j=>{
+    let div=document.createElement("div");
+    div.className="card";
+
+    div.innerHTML = `
+      <div class="job-title">${j.title}</div>
+      <div class="company">${j.company}</div>
+      <div class="location">📍 ${j.location}</div>
+    `;
+
+    let btn = document.createElement("button");
+    btn.innerText = "Apply Now";
+    btn.className = "apply-btn";
+
+    btn.addEventListener("click", function(){
+      applyJob(j.title, j.company, j.location);
+    });
+
+    div.appendChild(btn);
+    results.appendChild(div);
+  });
+}
+
+// APPLY
+function applyJob(title, company, location){
+  localStorage.setItem("jobTitle", title);
+  localStorage.setItem("jobCompany", company);
+  localStorage.setItem("jobLocation", location);
+
+  window.location.href = "applynow.html";
+}
+
+</script>
+
+</body>
+</html>

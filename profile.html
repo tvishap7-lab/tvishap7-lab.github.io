@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile - HireSphere</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  color:#1f2937;
+}
+
+/* NAVBAR */
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 50px;
+  background:#2563eb;
+  color:white;
+}
+
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:20px;
+}
+
+nav a{
+  text-decoration:none;
+  color:white;
+  font-weight:bold;
+}
+
+/* MAIN CONTAINER */
+.container{
+  padding:50px;
+  max-width:600px;
+  margin:auto;
+}
+
+/* CARD */
+.profile-card{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.1);
+}
+
+.profile-card h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+/* FORM */
+.profile-info input{
+  width:100%;
+  padding:10px;
+  margin:8px 0 15px 0;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+.section{
+  margin-top:15px;
+}
+
+.section h3{
+  color:#2563eb;
+  margin-bottom:5px;
+}
+
+/* BUTTON */
+.btn{
+  width:100%;
+  padding:12px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:10px;
+  font-size:16px;
+}
+
+.btn:hover{
+  background:#1d4ed8;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:20px;
+  background:#1f2937;
+  color:white;
+  margin-top:30px;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+<h2>HireSphere</h2>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="jobs.html">Jobs</a></li>
+<li><a href="profile.html">My Profile</a></li>
+</ul>
+</nav>
+
+<!-- PROFILE FORM -->
+<div class="container">
+<div class="profile-card">
+
+<h2>My Profile</h2>
+
+<form id="profileForm" class="profile-info">
+
+<p><strong>Name:</strong></p>
+<input type="text" id="pname">
+
+<p><strong>Email:</strong></p>
+<input type="email" id="pemail">
+
+<p><strong>Age:</strong></p>
+<input type="number" id="page">
+
+<p><strong>Location:</strong></p>
+<input type="text" id="plocation">
+
+<div class="section">
+<h3>Skills</h3>
+<input type="text" id="pskills" placeholder="e.g. HTML, CSS, JS">
+</div>
+
+<div class="section">
+<h3>Education</h3>
+<input type="text" id="pedu">
+</div>
+
+<div class="section">
+<h3>Preferred Job Role</h3>
+<input type="text" id="prole">
+</div>
+
+<button type="submit" class="btn">Save Profile</button>
+
+</form>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<p>© 2026 HireSphere. All Rights Reserved.</p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+// Load saved data
+document.getElementById("pname").value = localStorage.getItem("username") || "";
+document.getElementById("pemail").value = localStorage.getItem("email") || "";
+document.getElementById("page").value = localStorage.getItem("age") || "";
+document.getElementById("plocation").value = localStorage.getItem("location") || "";
+document.getElementById("pskills").value = localStorage.getItem("skills") || "";
+document.getElementById("pedu").value = localStorage.getItem("education") || "";
+document.getElementById("prole").value = localStorage.getItem("role") || "";
+
+// Save data
+document.getElementById("profileForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  localStorage.setItem("username", document.getElementById("pname").value);
+  localStorage.setItem("email", document.getElementById("pemail").value);
+  localStorage.setItem("age", document.getElementById("page").value);
+  localStorage.setItem("location", document.getElementById("plocation").value);
+  localStorage.setItem("skills", document.getElementById("pskills").value);
+  localStorage.setItem("education", document.getElementById("pedu").value);
+  localStorage.setItem("role", document.getElementById("prole").value);
+
+  alert("Profile Updated ✅");
+});
+</script>
+
+</body>
+</html>

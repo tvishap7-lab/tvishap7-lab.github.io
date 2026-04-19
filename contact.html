@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us Popup - HireSphere</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#f5f7fb;display:flex;justify-content:center;align-items:center;height:100vh;}
+.popup{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.2);
+width:400px;
+text-align:center;
+}
+.popup h2{margin-bottom:20px;color:#2563eb;}
+.popup input,.popup textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:5px;
+}
+.popup button{
+padding:12px 25px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+.popup button:hover{background:#1d4ed8;}
+</style>
+</head>
+<body>
+<div class="popup">
+<h2>Contact Us</h2>
+<form id="contactForm">
+  <input type="text" placeholder="Your Name" required>
+  <input type="email" placeholder="Your Email" required>
+  <textarea rows="4" placeholder="Your Message" required></textarea>
+  <button type="submit">Send Message</button>
+</form>
+
+<p id="successMsg" style="color:green; margin-top:10px;"></p>
+
+<!-- SCRIPT GOES HERE -->
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  document.getElementById("successMsg").innerText = "Message sent successfully ✅";
+  this.reset();
+});
+</script>
+
+</body>
+</html>
+</div>
+</body>
+</html>

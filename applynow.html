@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply Now - HireSphere</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+
+body{
+  background:#f5f7fb;
+}
+
+.container{
+  max-width:400px;
+  margin:80px auto;
+  background:white;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:1px solid #ccc;
+  border-radius:5px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+#jobDetails{
+  margin-bottom:15px;
+  background:#f1f5f9;
+  padding:10px;
+  border-radius:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Apply for Job</h2>
+
+<!-- Job Details -->
+<div id="jobDetails"></div>
+
+<!-- Form -->
+<input type="text" id="name" placeholder="Your Name">
+<input type="email" id="email" placeholder="Your Email">
+
+<!-- IMPORTANT: type=\"button\" -->
+<button type="button" onclick="applyNow()">Submit Application</button>
+
+</div>
+
+<script>
+// LOAD JOB DATA
+const title = localStorage.getItem("jobTitle");
+const company = localStorage.getItem("jobCompany");
+const location = localStorage.getItem("jobLocation");
+
+// SHOW JOB DETAILS
+document.getElementById("jobDetails").innerHTML =
+  "<b>" + (title || "No Job Selected") + "</b><br>" +
+  (company || "") + "<br>" +
+  (location || "");
+
+function applyNow(){
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+
+    if(name === "" || email === ""){
+        alert("Please fill all fields");
+        return;
+    }
+
+    let applications = JSON.parse(localStorage.getItem("applications")) || [];
+
+    const job = {
+        name: name,
+        email: email,
+        title: localStorage.getItem("jobTitle"),
+        company: localStorage.getItem("jobCompany"),
+        location: localStorage.getItem("jobLocation")
+    };
+
+    applications.push(job);
+
+    localStorage.setItem("applications", JSON.stringify(applications));
+
+    alert("Application Submitted Successfully!");
+
+    // 🔥 FORCE redirect after slight delay (fixes browser issues)
+    setTimeout(() => {
+        window.location.assign("./applications.html");
+    }, 500);
+}
+
+</script>
+
+</body>
+</html>

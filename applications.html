@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Applications</title>
+<style>
+body{font-family:Arial;background:#f5f7fb;padding:20px;}
+.card{background:white;padding:15px;margin:10px;border-radius:8px;}
+</style>
+</head>
+<body>
+
+<h2>My Applications</h2>
+<div id="list"></div>
+
+<script>
+let applications = JSON.parse(localStorage.getItem("applications")) || [];
+
+let container = document.getElementById("list");
+
+applications.forEach(job => {
+    let div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = "<h3>" + job.title + "</h3>" +
+                    "<p>" + job.company + "</p>" +
+                    "<p>" + job.location + "</p>";
+    container.appendChild(div);
+});
+</script>
+
+</body>
+</html>
