@@ -160,6 +160,7 @@ body.dark .card{
     <li><a href="contact.html">Contact</a></li>
     <li><a href="profile.html">My Profile</a></li>
     <li><a href="applications.html">My Applications</a></li>
+    <li><button onclick="logout()" class="logout-btn">Logout</button></li>
   </ul>
 
   <div style="display:flex;align-items:center;">
@@ -264,6 +265,13 @@ function applyJob(title, company, location){
   window.location.href = "applynow.html";
 }
 
+  function logout() {
+    const confirmLogout = confirm("Are you sure you want to logout?");
+    if (confirmLogout) { 
+        alert("Logging out...");
+        window.location.href = "login.html"; 
+    }
+}
 </script>
 
 </body>
